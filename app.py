@@ -64,30 +64,40 @@ with right_col:
 
     if predict:
 
-        input_df = pd.DataFrame(
-            [[name, company, year, kms_driven, fuel_type]],
-            columns=[
-                "name",
-                "company",
-                "year",
-                "kms_driven",
-                "fuel_type"
-            ]
-        )
+    input_df = pd.DataFrame(
+        [[name, company, year, kms_driven, fuel_type]],
+        columns=[
+            "name",
+            "company",
+            "year",
+            "kms_driven",
+            "fuel_type"
+        ]
+    )
 
-        prediction = model.predict(input_df)
+    prediction = model.predict(input_df)
 
-        price = round(float(prediction[0][0]))
+    price = round(float(prediction[0][0]))
 
+    # Validation
+    if price <= 0:
+        st.error("❌ Invalid Prediction! Input values are mismatched.")
+    else:
         st.markdown(
-        f"""
-        <h1 style='text-align:center;
-               font-size:70px;
-               color:#00E676;'>
-        ₹ {price}
-        </h1>
-        """,
-        unsafe_allow_html=True
-)
+            f"""
+            <div style="
+                background:#d1fae5;
+                padding:30px;
+                border-radius:15px;
+                text-align:center;
+            ">
+                <h2 style="color:#065f46;">💰 Estimated Price</h2>
+                <h1 style="font-size:70px;color:#00C853;">
+                    ₹ {price}
+                </h1>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
        
