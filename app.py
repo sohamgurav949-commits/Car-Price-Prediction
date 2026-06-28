@@ -56,6 +56,7 @@ with left_col:
     )
 
 # ================= RIGHT COLUMN =================
+# ================= RIGHT COLUMN =================
 with right_col:
 
     st.write("")
@@ -64,40 +65,39 @@ with right_col:
 
     if predict:
 
-    input_df = pd.DataFrame(
-        [[name, company, year, kms_driven, fuel_type]],
-        columns=[
-            "name",
-            "company",
-            "year",
-            "kms_driven",
-            "fuel_type"
-        ]
-    )
-
-    prediction = model.predict(input_df)
-
-    price = round(float(prediction[0][0]))
-
-    # Validation
-    if price <= 0:
-        st.error("❌ Invalid Prediction! Input values are mismatched.")
-    else:
-        st.markdown(
-            f"""
-            <div style="
-                background:#d1fae5;
-                padding:30px;
-                border-radius:15px;
-                text-align:center;
-            ">
-                <h2 style="color:#065f46;">💰 Estimated Price</h2>
-                <h1 style="font-size:70px;color:#00C853;">
-                    ₹ {price}
-                </h1>
-            </div>
-            """,
-            unsafe_allow_html=True
+        input_df = pd.DataFrame(
+            [[name, company, year, kms_driven, fuel_type]],
+            columns=[
+                "name",
+                "company",
+                "year",
+                "kms_driven",
+                "fuel_type"
+            ]
         )
 
-       
+        if kms_driven > 500000:
+            st.error("❌ Input Mismatch! Please enter a valid Kilometers Driven value.")
+        else:
+            prediction = model.predict(input_df)
+            price = round(float(prediction[0][0]))
+
+            if price <= 0:
+                st.error("❌ Invalid Prediction! Please check the entered values.")
+            else:
+                st.markdown(
+                    f"""
+                    <div style="
+                        background:#d1fae5;
+                        padding:30px;
+                        border-radius:15px;
+                        text-align:center;
+                    ">
+                        <h2 style="color:#065f46;">💰 Estimated Price</h2>
+                        <h1 style="font-size:70px;color:#00C853;">
+                            ₹ {price}
+                        </h1>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
