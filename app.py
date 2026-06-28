@@ -77,12 +77,17 @@ with right_col:
 
         prediction = model.predict(input_df)
 
-        st.markdown(
-            "<h2 style='text-align:center;color:#00C853;'>💰 Estimated Price</h2>",
-            unsafe_allow_html=True
-        )
+        price = round(float(prediction[0][0]))
 
         st.markdown(
-            f"<h1 style='text-align:center;font-size:70px;color:#00E676;'>₹ {int(prediction[0])}</h1>",
-            unsafe_allow_html=True
-        )
+        f"""
+        <h1 style='text-align:center;
+               font-size:70px;
+               color:#00E676;'>
+        ₹ {price}
+        </h1>
+        """,
+        unsafe_allow_html=True
+)
+
+       
